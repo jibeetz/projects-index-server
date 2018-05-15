@@ -1,0 +1,22 @@
+{
+  "description": "",
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "main": "server.js",
+  "name": "json-editor-nodejs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "version": "1.0.0",
+  "devDependencies": {
+    "express": "^4.16.2",
+    "async": "^2.6.0"
+  },
+  "dependencies": {
+    "path": "^0.12.7"
+  }
+}
