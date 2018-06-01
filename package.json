@@ -6,11 +6,11 @@
   },
   "keywords": [],
   "license": "ISC",
-  "main": "server.js",
+  "main": "./app/server.js",
   "name": "json-editor-nodejs",
   "scripts": {
-    "start": "node server.js",
-    "scrap": "nodemon ./scraper.js"
+    "start": "node ./app/server.js",
+    "scrap": "nodemon ./app/scraper.js"
   },
   "version": "1.0.0",
   "devDependencies": {

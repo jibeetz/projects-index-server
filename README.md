@@ -1,1 +1,1 @@
-Node server to save JSON objects in files
+# Puppeteer scraper
