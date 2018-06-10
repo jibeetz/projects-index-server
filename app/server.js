@@ -5,6 +5,8 @@ const async = require("async");
 const path = require("path");
 var app = express();
 
+app.use(express.static('app/view'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -40,27 +42,31 @@ app.get('/teamslist', function (req, res) {
 
 })
 
-app.get('/team/:teamid', function (req, res) {
+app.get('/scores/:teamid', function (req, res) {
 
 	console.log('req.params.file', req.params.file);
-	res.sendFile(__dirname + '/app/data/' + req.params.file + '.json');
+	res.sendFile(__dirname + '/data/' + req.params.file + '.json');
 
 })
 
-app.get('/teams', function (req, res) {
+app.get('/scores', function (req, res) {
 
 	fs.readdir('./app/data', (err, files) => {
 
 		files = files.map(file => './app/data/' + file);
 
 		let data = async.map(files, fs.readFile, (err, results) => {
-			if (err) return reject(err);
 
 			let dataResults = results.map(JSON.parse)
 
 			res.send(dataResults);
 		});
 	})
+})
+
+app.get('/graph', function (req, res) {
+	console.log('Chart loading...');
+	res.sendFile(__dirname + "/view/" + "chart.html");
 })
 
 var server = app.listen(9595, function () {
