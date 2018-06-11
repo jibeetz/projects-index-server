@@ -7,8 +7,9 @@ d3.json(url, function (teams) {
 let generateChart = (teams) => {
 
     let chartMargin = 50;
-    let chartWidth = parseInt(d3.select("#evolution").style("width")) - chartMargin;
-    let chartHeight = parseInt(d3.select("#evolution").style("height")) - chartMargin;
+    let chartMarginTop = 200;
+    let chartWidth = parseInt(d3.select("#evolution").style("width"));
+    let chartHeight = parseInt(d3.select("#evolution").style("height"));
     let duration = 250;
 
     let lineOpacity = "0.25";
@@ -24,16 +25,16 @@ let generateChart = (teams) => {
 
     /* Add SVG */
     let svg = d3.select("#evolution").append("svg")
-    .attr("width", chartWidth + chartMargin)
-    .attr("height", chartHeight + chartMargin)
+    .attr("width", chartWidth)
+    .attr("height", chartHeight - chartMarginTop)
     .append('g')
     .attr("transform", `translate(${chartMargin}, ${chartMargin})`);
 
     let chartXScale = d3.scaleLinear()
-    .range([0, chartWidth - chartMargin])
+    .range([0, chartWidth - (chartMargin * 2)])
     .domain([0, d3.max(teams, team => d3.max(team.games, d => d.number))])
 
-    let chartYScale = d3.scaleLinear().domain([0, 1000]).range([chartHeight - chartMargin, 0]);
+    let chartYScale = d3.scaleLinear().domain([0, 1000]).range([chartHeight - chartMarginTop - (chartMargin * 2), 0]);
 
     /* Apply axis */
     let xAxis = d3.axisBottom(chartXScale).ticks(chartWidth / 25);
@@ -41,12 +42,12 @@ let generateChart = (teams) => {
 
     svg.append("g")
     .attr("class", "x axis")
-    .attr("transform", `translate(0, ${chartHeight - chartMargin})`)
+    .attr("transform", `translate(0, ${chartHeight - chartMarginTop - (chartMargin * 2)})`)
     .call(xAxis)
     .append('text')
     .attr("class", "label")
     .attr("y", 35)
-    .attr("x", chartWidth - chartMargin - 15)
+    .attr("x", chartWidth - (chartMargin * 2) - 15)
     .attr("fill", "#000")
     .text("Games");
 
@@ -163,25 +164,25 @@ let generateChart = (teams) => {
     });
 
     function resize() {
-        let chartWidth = parseInt(d3.select("#evolution svg").style("width")) - (chartMargin);
-        let chartHeight = parseInt(d3.select("#evolution svg").style("height")) - (chartMargin);
+        let chartWidth = parseInt(d3.select("#evolution").style("width"));
+        let chartHeight = parseInt(d3.select("#evolution").style("height"));
 
-        // // Update the range of the scale with new width/height
-        chartXScale.range([0, chartWidth - chartMargin]);
-        chartYScale.range([chartHeight - chartMargin, 0]);
+        // Update the range of the scale with new width/height
+        chartXScale.range([0, chartWidth - (chartMargin * 2)]);
+        chartYScale.range([chartHeight - chartMarginTop - (chartMargin * 2), 0]);
 
-        d3.select('#evolution svg').attr("width", chartWidth + chartMargin)
-        d3.select('#evolution svg').attr("height", chartHeight + chartMargin)
+        d3.select('#evolution svg').attr("width", chartWidth)
+        d3.select('#evolution svg').attr("height", chartHeight - chartMarginTop)
 
         // Update the axis and text with the new scale
         svg.select('.x.axis')
-        .attr("transform", `translate(0, ${chartHeight - chartMargin})`)
+        .attr("transform", `translate(0, ${chartHeight - chartMarginTop - (chartMargin * 2)})`)
         .call(xAxis);
 
         svg.select('.y.axis')
         .call(yAxis);
 
-        // // Force D3 to recalculate and update the line
+        // Force D3 to recalculate and update the line
         svg.selectAll('.line')
         .attr('d', d => line(d.games))
 
@@ -189,7 +190,7 @@ let generateChart = (teams) => {
         .attr("cx", d => chartXScale(d.number))
         .attr("cy", d => chartYScale(d.avg))
 
-        svg.selectAll('.x .label').attr("x", chartWidth - chartMargin - 15)
+        svg.selectAll('.x .label').attr("x", chartWidth - (chartMargin * 2)  - 15)
 
         // // Update the tick marks
         xAxis.ticks(Math.max(chartWidth / 25));
