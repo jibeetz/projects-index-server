@@ -41,10 +41,10 @@ const Teams = require('./config').teams;
 
 		let teamConstructed = await page.evaluate(async team => {
 
-			let team_nice_name = document.querySelector('#meta > div:nth-child(2) > h1 > span:nth-child(2)').innerText;
-			let year = document.querySelector('#meta > div:nth-child(2) > h1 > span:nth-child(1)').innerText;
-			let league = document.querySelector('#meta > div:nth-child(2) > p:nth-child(3) > a:nth-child(2)').innerText;
-			let games = document.querySelectorAll('#team_schedule > tbody > tr:not([class="thead"]');
+			let team_nice_name = await document.querySelector('#meta > div:nth-child(2) > h1 > span:nth-child(2)').innerText;
+			let year = await document.querySelector('#meta > div:nth-child(2) > h1 > span:nth-child(1)').innerText;
+			let league = await document.querySelector('#meta > div:nth-child(2) > p:nth-child(3) > a:nth-child(2)').innerText;
+			let games = await document.querySelectorAll('#team_schedule > tbody > tr:not([class="thead"]');
 
 			let teamData = {
 				meta: {
