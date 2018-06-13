@@ -7,7 +7,7 @@
   "keywords": [],
   "license": "ISC",
   "main": "./app/server.js",
-  "name": "json-editor-nodejs",
+  "name": "sport-teams-rankings",
   "scripts": {
     "start": "node ./app/server.js",
     "scrap": "nodemon ./app/scraper.js"
